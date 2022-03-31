@@ -2,6 +2,7 @@ import { shipFactory } from "../ship";
 
 test('Create a Battleship (length 4) and check ship parameters', () => {
     const ship = shipFactory(4);
+    expect(ship.length).toBe(4);
     expect(ship.health).toEqual([1, 1, 1, 1]);
     expect(ship.isSunk()).toBe(false);
 });

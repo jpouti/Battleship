@@ -7,6 +7,7 @@ const shipFactory = (length) => {
         return health.reduce((a, b) => a + b, 0) === 0;
     }
     return {
+        length,
         health,
         hit,
         isSunk
