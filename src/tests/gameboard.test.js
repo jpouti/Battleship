@@ -58,7 +58,6 @@ test('Check whether all of the ships have been sunk or not', () => {
     gameboard.receiveAttack(2, 0); //submarine
     gameboard.receiveAttack(3, 0);
     gameboard.receiveAttack(4, 0);
-    console.log(gameboard.board);
     gameboard.receiveAttack(1, 1); //cruiser
     gameboard.receiveAttack(2, 1);
     gameboard.receiveAttack(3, 1);
@@ -72,4 +71,11 @@ test('Check whether all of the ships have been sunk or not', () => {
     gameboard.receiveAttack(4, 3);
     gameboard.receiveAttack(5, 3);
     expect(gameboard.everythingLost()).toBe(true);
+});
+
+test('Try to place a ship above other ship and confirm it fails', () => {
+    const gameboard = Gameboard();
+    gameboard.placeShip('destroyer', 0, 0, 'vertical');
+    expect(gameboard.placeShip('submarine', 0, 0, 'vertical')).toBe(false);
+    expect(gameboard.placeShip('submarine', 0, 1, 'horizontal')).toBe(false);
 });
