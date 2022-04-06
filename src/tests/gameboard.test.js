@@ -79,3 +79,29 @@ test('Try to place a ship above other ship and confirm it fails', () => {
     expect(gameboard.placeShip('submarine', 0, 0, 'vertical')).toBe(false);
     expect(gameboard.placeShip('submarine', 0, 1, 'horizontal')).toBe(false);
 });
+
+test('Place ships randomly with randomPlacement function, and check that all of the ships are on board', () => {
+    const gameboard = Gameboard();
+    gameboard.randomPlacement();
+    let ships = [].concat(...gameboard.board).reduce((a, b) => (a[b] = (a[b] || 0) + 1, a), {});
+    // check gameboard to contain start and end of each ship
+    expect(ships['1,carrier,0']).toBe(1);
+    expect(ships['1,carrier,4']).toBe(1);
+    expect(ships['1,battleship,0']).toBe(1);
+    expect(ships['1,battleship,3']).toBe(1);
+    expect(ships['1,cruiser,0']).toBe(1);
+    expect(ships['1,cruiser,2']).toBe(1);
+    expect(ships['1,submarine,0']).toBe(1);
+    expect(ships['1,submarine,2']).toBe(1);
+    expect(ships['1,destroyer,0']).toBe(1);
+    expect(ships['1,destroyer,1']).toBe(1);
+});
+
+test('Clear gameboard from all the ships', () => {
+    const gameboard = Gameboard();
+    gameboard.placeShip('destroyer', 0, 0, 'vertical');
+    gameboard.placeShip('cruiser', 5, 5, 'vertical');
+    gameboard.clearBoard();
+    expect(gameboard.board[0][0]).toBe('');
+    expect(gameboard.board[5][5]).toBe('');
+})

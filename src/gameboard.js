@@ -111,7 +111,16 @@ const Gameboard = () => {
             } while (loop === false);
         });
     };
-    return { ships, board, placeShip, receiveAttack, everythingLost, placementCheck, randomPlacement };
+    const clearBoard = () => {
+        for (let i = 0; i < board.length; i++) {
+            let row = board[i];
+            for (let j = 0; j < row.length; j++) {
+                board[i][j] = "";
+            }
+        }
+        return board;
+    }
+    return { ships, board, placeShip, receiveAttack, everythingLost, placementCheck, randomPlacement, clearBoard };
 };
 
 export { Gameboard };
