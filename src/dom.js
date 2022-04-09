@@ -35,11 +35,18 @@ const dom = (() => {
         const submarine = document.createElement('div');
         const destroyer = document.createElement('div');
 
-        carrier.id = 'carrier' + player;
-        battleship.id = 'battleship'+ player;
-        cruiser.id = 'cruiser'+ player;
-        submarine.id = 'submarine'+ player;
-        destroyer.id = 'destroyer'+ player;
+        carrier.id = 'carrier-' + player.name;
+        battleship.id = 'battleship-'+ player.name;
+        cruiser.id = 'cruiser-'+ player.name;
+        submarine.id = 'submarine-'+ player.name;
+        destroyer.id = 'destroyer-'+ player.name;
+
+        carrier.textContent = Array(5);
+        battleship.textContent = Array(4);
+        cruiser.textContent = Array(3);
+        submarine.textContent = Array(3);
+        destroyer.textContent = Array(2);
+
         shipContainer.appendChild(carrier);
         shipContainer.appendChild(battleship);
         shipContainer.appendChild(cruiser);
@@ -48,16 +55,17 @@ const dom = (() => {
         return shipContainer;
     }
     // create elements for players
-    const players = (id) => {
+    const players = (name) => {
         const playerContainer = document.createElement('div');
         playerContainer.className = 'player-container';
 
         const player = document.createElement('p');
-        player.id = 'player' + id;
+        player.id = name.name;
+        player.textContent = name.name;
 
-        const element = document.querySelector('.player-container');
-        element.appendChild(player);
-        return element;
+        playerContainer.appendChild(player);
+        playerContainer.appendChild(dom.createShips(name));
+        return playerContainer;
     }
     // display gameboard array from selected player in the grid
     const displayGrid = (player) => {
@@ -73,7 +81,22 @@ const dom = (() => {
             rows = 0;
         }
     }
-    return {createGrid, createShips, players, displayGrid}
+    const pageLoad = (player1, player2) => {
+        const content = document.querySelector('.content');
+
+        const headerContainer = document.createElement('div');
+        headerContainer.className = 'header-container';
+
+        const header = document.createElement('h3');
+        header.textContent = 'Battleship';
+        headerContainer.appendChild(header);
+        content.appendChild(headerContainer);
+
+        content.appendChild(dom.players(player1));
+        content.appendChild(dom.createGrid());
+        content.appendChild(dom.players(player2));
+    }
+    return {createGrid, createShips, players, displayGrid, pageLoad}
 })();
 
 export { dom };
