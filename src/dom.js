@@ -15,6 +15,7 @@ const dom = (() => {
                 let element = document.createElement('div');
                 element.setAttribute('data-id', ([rows, cols]));
                 element.id = [rows, cols];
+                element.className = 'grid-item';
                 grid.appendChild(element);
                 rows ++;
             }
@@ -74,7 +75,11 @@ const dom = (() => {
         while (cols < 10) {
             while (rows < 10) {
                 let gridElement = document.getElementById([rows, cols]);
-                gridElement.textContent = player.gameboard.board[cols][rows];
+                if (player.gameboard.board[cols][rows] === "") {
+                    gridElement.textContent = player.gameboard.board[cols][rows];    
+                } else if (player.gameboard.board[cols][rows].length !== "") {
+                    gridElement.textContent = player.gameboard.board[cols][rows][0];   
+                }
                 rows ++;
             }
             cols++;
@@ -92,9 +97,14 @@ const dom = (() => {
         headerContainer.appendChild(header);
         content.appendChild(headerContainer);
 
-        content.appendChild(dom.players(player1));
-        content.appendChild(dom.createGrid());
-        content.appendChild(dom.players(player2));
+        const mainContent = document.createElement('div');
+        mainContent.className = 'main-content';
+
+        mainContent.appendChild(dom.players(player1));
+        mainContent.appendChild(dom.createGrid());
+        mainContent.appendChild(dom.players(player2));
+
+        content.appendChild(mainContent);
     }
     return {createGrid, createShips, players, displayGrid, pageLoad}
 })();

@@ -1,0 +1,45 @@
+/* reset margin & padding from css */
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+.content {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-container {
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(10, 5vw);
+    grid-template-rows: repeat(10, 5vh);
+}
+
+#grid > div {
+    border: 0.5px solid black;
+}
+
+#grid :hover {
+    background-color: grey;
+}
