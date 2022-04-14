@@ -94,10 +94,10 @@ const dom = (() => {
                 let gridElement = document.getElementById([rows, cols, 2]);
                 if (player.gameboard.board[cols][rows] === "") {
                     gridElement.textContent = player.gameboard.board[cols][rows];    
-                } else if (player.gameboard.board[cols][rows] === "M") {
-                    gridElement.textContent = player.gameboard.board[cols][rows];   
-                } else if (player.gameboard.board[cols][rows] === "H") {
-                    gridElement.textContent = player.gameboard.board[cols][rows];   
+                } else if (player.gameboard.board[cols][rows] === "miss") {
+                    gridElement.textContent = 'M'  
+                } else if (player.gameboard.board[cols][rows] === "hit") {
+                    gridElement.textContent = 'H';   
                 } else if (player.gameboard.board[cols][rows] !== "") {
                     gridElement.textContent = "";   
                 } 
