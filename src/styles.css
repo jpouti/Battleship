@@ -23,23 +23,26 @@ html {
     align-items: center;
 }
 
-.main-content {
+.main-content  {
     display: flex;
     justify-content: space-between;
     margin-left: 5vw;
     margin-right: 5vw;
 }
 
-#grid {
+#grid1,
+#grid2 {
     display: grid;
-    grid-template-columns: repeat(10, 5vw);
-    grid-template-rows: repeat(10, 5vh);
+    grid-template-columns: repeat(10, 4vw);
+    grid-template-rows: repeat(10, 4vh);
 }
 
-#grid > div {
+#grid1 > div,
+#grid2 > div {
     border: 0.5px solid black;
 }
 
-#grid :hover {
+#grid1 :hover,
+#grid2 :hover {
     background-color: grey;
 }

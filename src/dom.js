@@ -2,11 +2,11 @@ import { Player } from "./player.js";
 
 const dom = (() => {
     //create 10x10 grid elements
-    const createGrid = () => {
+    const createGrid = (num) => {
         const gridContainer = document.createElement('div');
-        gridContainer.className = 'grid-container';
+        gridContainer.className = 'grid-container' + num;
         const grid = document.createElement('div');
-        grid.id = 'grid';
+        grid.id = 'grid' + num;
 
         let rows = 0;
         let cols = 0;
@@ -14,8 +14,8 @@ const dom = (() => {
             while (rows < 10) {
                 let element = document.createElement('div');
                 element.setAttribute('data-id', ([rows, cols]));
-                element.id = [rows, cols];
-                element.className = 'grid-item';
+                element.id = [rows, cols, num];
+                element.className = 'grid-item' + num;
                 grid.appendChild(element);
                 rows ++;
             }
@@ -69,17 +69,38 @@ const dom = (() => {
         return playerContainer;
     }
     // display gameboard array from selected player in the grid
-    const displayGrid = (player) => {
+    const displayGridPlayer = (player) => {
         let rows = 0;
         let cols = 0;
         while (cols < 10) {
             while (rows < 10) {
-                let gridElement = document.getElementById([rows, cols]);
+                let gridElement = document.getElementById([rows, cols, 1]);
                 if (player.gameboard.board[cols][rows] === "") {
                     gridElement.textContent = player.gameboard.board[cols][rows];    
-                } else if (player.gameboard.board[cols][rows].length !== "") {
+                } else if (player.gameboard.board[cols][rows] !== "") {
                     gridElement.textContent = player.gameboard.board[cols][rows][0];   
                 }
+                rows ++;
+            }
+            cols++;
+            rows = 0;
+        }
+    }
+    const displayGridComputer = (player) => {
+        let rows = 0;
+        let cols = 0;
+        while (cols < 10) {
+            while (rows < 10) {
+                let gridElement = document.getElementById([rows, cols, 2]);
+                if (player.gameboard.board[cols][rows] === "") {
+                    gridElement.textContent = player.gameboard.board[cols][rows];    
+                } else if (player.gameboard.board[cols][rows] === "M") {
+                    gridElement.textContent = player.gameboard.board[cols][rows];   
+                } else if (player.gameboard.board[cols][rows] === "H") {
+                    gridElement.textContent = player.gameboard.board[cols][rows];   
+                } else if (player.gameboard.board[cols][rows] !== "") {
+                    gridElement.textContent = "";   
+                } 
                 rows ++;
             }
             cols++;
@@ -100,13 +121,23 @@ const dom = (() => {
         const mainContent = document.createElement('div');
         mainContent.className = 'main-content';
 
-        mainContent.appendChild(dom.players(player1));
-        mainContent.appendChild(dom.createGrid());
-        mainContent.appendChild(dom.players(player2));
+        const player1Content = document.createElement('div');
+        player1Content.className = 'player1-content';
 
+        player1Content.appendChild(dom.players(player1));
+        player1Content.appendChild(dom.createGrid('1'));
+
+        const player2Content = document.createElement('div');
+        player2Content.className = 'player2-content';
+
+        player2Content.appendChild(dom.players(player2));
+        player2Content.appendChild(dom.createGrid('2'));
+
+        mainContent.appendChild(player1Content);
+        mainContent.appendChild(player2Content);
         content.appendChild(mainContent);
     }
-    return {createGrid, createShips, players, displayGrid, pageLoad}
+    return {createGrid, createShips, players, displayGridPlayer, displayGridComputer, pageLoad}
 })();
 
 export { dom };
