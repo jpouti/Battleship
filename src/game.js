@@ -2,6 +2,16 @@ import { Player } from "./player.js";
 import { dom } from "./dom.js";
 
 const game = (() => {
+    const changeName = (player, newName) => {
+        const playerName = document.getElementById(player.name);
+        playerName.textContent = newName;
+        player.name = newName;
+    }
+    const randomShip = (player) => {
+        player.gameboard.clearBoard();
+        player.gameboard.randomPlacement();
+        dom.displayGridPlayer(player);
+    }
     const newGame = (player1, player2) => {
         dom.displayGridPlayer(player1);
         dom.displayGridComputer(player2);
@@ -48,23 +58,50 @@ const game = (() => {
             grid.forEach(item => {
                 item.removeEventListener('click', listener);
             });
-        };
+        };     
         const winner = () => {
             if (player1.gameboard.everythingLost() === true) {
                 console.log('p2 won');
                 deactivateGrid();
+                deactivateRandomAttack();
                 return player2;
             } else if (player2.gameboard.everythingLost() === true) {
                 console.log('p1 won');
                 deactivateGrid();
+                deactivateRandomAttack();
                 return player1;
             } else {
                 return false;
             }
         }
+        const randomAttackPlayer = () => {
+            player1.computerAttack(player2);
+            dom.displayGridComputer(player2);
+            if (winner() !== false) {
+                console.log(winner());
+                return;
+            }
+            turn++;
+    
+            player2.computerAttack(player1);
+            dom.displayGridPlayer(player1);
+            if (winner() !== false) {
+                console.log(winner());
+            } 
+            return;
+        }
+        const activateRandomAttack = () => {
+            const randomAttackBtn = document.getElementById('attack-btn');
+            randomAttackBtn.addEventListener('click', randomAttackPlayer);
+        }
+        const deactivateRandomAttack = () => {
+            const randomAttackBtn = document.getElementById('attack-btn');
+            randomAttackBtn.removeEventListener('click', randomAttackPlayer);
+        }
         activateGrid();
+        activateRandomAttack();
     }
-    return { newGame };
+    return { changeName, newGame, randomShip };
 })();
 
 export { game };

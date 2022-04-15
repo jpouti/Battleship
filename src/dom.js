@@ -75,7 +75,7 @@ const dom = (() => {
         btnContainer.className = 'btn-container-player';
 
         const changeNameBtn = document.createElement('button');
-        changeNameBtn.id = 'name-btn';
+        changeNameBtn.id = 'name-btn-1';
         changeNameBtn.textContent = 'Change name';
 
         const shipBtn = document.createElement('button');
@@ -98,7 +98,7 @@ const dom = (() => {
         btnContainer.className = 'btn-container-computer';
 
         const changeNameBtn = document.createElement('button');
-        changeNameBtn.id = 'name-btn';
+        changeNameBtn.id = 'name-btn-2';
         changeNameBtn.textContent = 'Change name';
 
         btnContainer.appendChild(changeNameBtn);
