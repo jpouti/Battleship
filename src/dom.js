@@ -59,14 +59,62 @@ const dom = (() => {
     const players = (name) => {
         const playerContainer = document.createElement('div');
         playerContainer.className = 'player-container';
+        playerContainer.id = 'player-container-' + name.name;
 
-        const player = document.createElement('p');
+        const player = document.createElement('h3');
         player.id = name.name;
         player.textContent = name.name;
 
         playerContainer.appendChild(player);
         playerContainer.appendChild(dom.createShips(name));
         return playerContainer;
+    }
+    // create buttons for player
+    const playerBtns = () => {
+        const btnContainer = document.createElement('div');
+        btnContainer.className = 'btn-container-player';
+
+        const changeNameBtn = document.createElement('button');
+        changeNameBtn.id = 'name-btn';
+        changeNameBtn.textContent = 'Change name';
+
+        const shipBtn = document.createElement('button');
+        shipBtn.id = 'ship-btn';
+        shipBtn.textContent = 'Randomize ships';
+
+        const attackBtn = document.createElement('button');
+        attackBtn.id = 'attack-btn';
+        attackBtn.textContent = 'Random attack'
+
+        btnContainer.appendChild(changeNameBtn);
+        btnContainer.appendChild(shipBtn);
+        btnContainer.appendChild(attackBtn);
+
+        return btnContainer;
+    }
+    //create button for computer
+    const computerBtns = () => {
+        const btnContainer = document.createElement('div');
+        btnContainer.className = 'btn-container-computer';
+
+        const changeNameBtn = document.createElement('button');
+        changeNameBtn.id = 'name-btn';
+        changeNameBtn.textContent = 'Change name';
+
+        btnContainer.appendChild(changeNameBtn);
+        return btnContainer;
+    }
+    // create buttons related to overall gameplay
+    const gameBtns = () => {
+        const gameBtnContainer = document.createElement('div');
+        gameBtnContainer.className = 'game-btn-container';
+
+        const newGameBtn = document.createElement('button');
+        newGameBtn.id = 'new-btn';
+        newGameBtn.textContent = 'Start Game';
+
+        gameBtnContainer.appendChild(newGameBtn);
+        return gameBtnContainer;
     }
     // display gameboard array from selected player in the grid
     const displayGridPlayer = (player) => {
@@ -110,6 +158,10 @@ const dom = (() => {
     const pageLoad = (player1, player2) => {
         const content = document.querySelector('.content');
 
+        while(content.firstChild) {
+            content.removeChild(content.firstChild);
+        }
+
         const headerContainer = document.createElement('div');
         headerContainer.className = 'header-container';
 
@@ -127,15 +179,22 @@ const dom = (() => {
         player1Content.appendChild(dom.players(player1));
         player1Content.appendChild(dom.createGrid('1'));
 
+        const playerContainer1 = player1Content.firstChild;
+        playerContainer1.appendChild(playerBtns());
+
         const player2Content = document.createElement('div');
         player2Content.className = 'player2-content';
 
         player2Content.appendChild(dom.players(player2));
         player2Content.appendChild(dom.createGrid('2'));
+        
+        const playerContainer2 = player2Content.firstChild;
+        playerContainer2.appendChild(computerBtns());
 
         mainContent.appendChild(player1Content);
         mainContent.appendChild(player2Content);
         content.appendChild(mainContent);
+        content.appendChild(gameBtns());
     }
     return {createGrid, createShips, players, displayGridPlayer, displayGridComputer, pageLoad}
 })();
