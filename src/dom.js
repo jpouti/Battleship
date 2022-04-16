@@ -155,6 +155,12 @@ const dom = (() => {
             rows = 0;
         }
     }
+    const createScoreboard = () => {
+        const scoreboard = document.createElement('div');
+        scoreboard.id = 'scoreboard';
+        return scoreboard;
+
+    }
     const pageLoad = (player1, player2) => {
         const content = document.querySelector('.content');
 
@@ -195,6 +201,7 @@ const dom = (() => {
         mainContent.appendChild(player2Content);
         content.appendChild(mainContent);
         content.appendChild(gameBtns());
+        content.appendChild(createScoreboard());
     }
     return {createGrid, createShips, players, displayGridPlayer, displayGridComputer, pageLoad}
 })();
