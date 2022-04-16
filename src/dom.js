@@ -113,7 +113,12 @@ const dom = (() => {
         newGameBtn.id = 'new-btn';
         newGameBtn.textContent = 'Start Game';
 
+        const resetBtn = document.createElement('button');
+        resetBtn.id = 'reset-btn';
+        resetBtn.textContent = 'Reset game';
+
         gameBtnContainer.appendChild(newGameBtn);
+        gameBtnContainer.appendChild(resetBtn);
         return gameBtnContainer;
     }
     // display gameboard array from selected player in the grid
