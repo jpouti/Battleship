@@ -15,7 +15,6 @@ const dom = (() => {
                 let element = document.createElement('div');
                 element.setAttribute('data-id', ([rows, cols]));
                 element.id = [rows, cols, num];
-                element.className = 'grid-item' + num;
                 grid.appendChild(element);
                 rows ++;
             }
@@ -36,17 +35,17 @@ const dom = (() => {
         const submarine = document.createElement('div');
         const destroyer = document.createElement('div');
 
-        carrier.id = 'carrier-' + player.name;
-        battleship.id = 'battleship-'+ player.name;
-        cruiser.id = 'cruiser-'+ player.name;
-        submarine.id = 'submarine-'+ player.name;
-        destroyer.id = 'destroyer-'+ player.name;
+        carrier.classList.add('carrier');
+        battleship.classList.add('battleship');
+        cruiser.classList.add('cruiser');
+        submarine.classList.add('submarine');
+        destroyer.classList.add('destroyer');
 
-        carrier.textContent = Array(5);
-        battleship.textContent = Array(4);
-        cruiser.textContent = Array(3);
-        submarine.textContent = Array(3);
-        destroyer.textContent = Array(2);
+        carrier.textContent = player.gameboard.ships['carrier'].health;
+        battleship.textContent = player.gameboard.ships['battleship'].health;
+        cruiser.textContent = player.gameboard.ships['cruiser'].health;
+        submarine.textContent = player.gameboard.ships['submarine'].health;
+        destroyer.textContent = player.gameboard.ships['destroyer'].health;
 
         shipContainer.appendChild(carrier);
         shipContainer.appendChild(battleship);
@@ -129,9 +128,18 @@ const dom = (() => {
             while (rows < 10) {
                 let gridElement = document.getElementById([rows, cols, 1]);
                 if (player.gameboard.board[cols][rows] === "") {
-                    gridElement.textContent = player.gameboard.board[cols][rows];    
+                    gridElement.textContent = player.gameboard.board[cols][rows];   
                 } else if (player.gameboard.board[cols][rows] !== "") {
-                    gridElement.textContent = player.gameboard.board[cols][rows][0];   
+                    if (player.gameboard.board[cols][rows] === 'hit') {
+                        gridElement.classList.add('hit');
+                        gridElement.textContent = "";
+                    } else if (player.gameboard.board[cols][rows] === 'miss'){
+                        gridElement.textContent = 'X';
+                        gridElement.classList.add('miss');                 
+                    } else {
+                        const ship = player.gameboard.board[cols][rows][1];
+                        gridElement.classList.add(ship);
+                    } 
                 }
                 rows ++;
             }
@@ -148,11 +156,12 @@ const dom = (() => {
                 if (player.gameboard.board[cols][rows] === "") {
                     gridElement.textContent = player.gameboard.board[cols][rows];    
                 } else if (player.gameboard.board[cols][rows] === "miss") {
-                    gridElement.textContent = 'M'  
+                    gridElement.textContent = 'X';
+                    gridElement.classList.add('miss');
                 } else if (player.gameboard.board[cols][rows] === "hit") {
-                    gridElement.textContent = 'H';   
+                    gridElement.classList.add('hit');
                 } else if (player.gameboard.board[cols][rows] !== "") {
-                    gridElement.textContent = "";   
+                    gridElement.textContent = "";
                 } 
                 rows ++;
             }

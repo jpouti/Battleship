@@ -8,6 +8,10 @@ const game = (() => {
         player.name = newName;
     }
     const randomShip = (player) => {
+        const grid = document.getElementById('grid1').childNodes;
+        grid.forEach(child => {
+            child.className = "" // rename class name for start, to avoid multiple img displaying
+        });
         player.gameboard.clearBoard();
         player.gameboard.randomPlacement();
         dom.displayGridPlayer(player);
@@ -25,43 +29,6 @@ const game = (() => {
                 return player2;
             }
         }
-        const activateGrid = () => {
-            const grid = document.querySelectorAll('#grid2');
-            grid.forEach(item => {
-                item.addEventListener('click', listener);
-            });
-        };
-        const listener = (event) => {
-            const y = event.path[0].id[0];
-            const x = event.path[0].id[2];
-            if (player2.gameboard.board[x][y] === 'miss' || player2.gameboard.board[x][y] === 'hit') {
-                scoreboard.textContent = 'You have already shot there, another spot could be more succesfull'
-                return;
-            } else if (player2.gameboard.board[x][y].length > 1 || player2.gameboard.board[x][y] === '') {
-                player1.attack(x, y, player2);
-                dom.displayGridComputer(player2);
-                if (winner() !== false) {
-                    const winner = winner();
-                    scoreboard.textContent = winner.name + ' Has won the battle';
-                    return;
-                }
-                turn++;
-
-                player2.computerAttack(player1);
-                dom.displayGridPlayer(player1);
-                if (winner() !== false) {
-                    const winner = winner();
-                    scoreboard.textContent = winner.name + ' Has won the battle';
-                } 
-                return;
-            }
-        }
-        const deactivateGrid = () => {
-            const grid = document.querySelectorAll('#grid2');
-            grid.forEach(item => {
-                item.removeEventListener('click', listener);
-            });
-        };     
         const winner = () => {
             if (player1.gameboard.everythingLost() === true) {
                 deactivateGrid();
@@ -75,12 +42,46 @@ const game = (() => {
                 return false;
             }
         }
+        const activateGrid = () => {
+            const grid = document.querySelectorAll('#grid2');
+            grid.forEach(item => {
+                item.addEventListener('click', listener);
+            });
+        };
+        const listener = (event) => {
+            const y = event.path[0].id[0];
+            const x = event.path[0].id[2];
+            if (player2.gameboard.board[x][y] === 'miss' || player2.gameboard.board[x][y] === 'hit') {
+                scoreboard.textContent = 'You have already shot there, another spot could be more succesfull'
+                return;
+            } else if (player2.gameboard.board[x][y].length > 1 || player2.gameboard.board[x][y] === '') { // add feature to display hits on the player containers as health left for the ships
+                player1.attack(x, y, player2);
+                dom.displayGridComputer(player2);
+                if (winner() !== false) {
+                    scoreboard.textContent = player1.name + ' Has won the battle';
+                    return;
+                }
+                turn++;
+
+                player2.computerAttack(player1);
+                dom.displayGridPlayer(player1);
+                if (winner() !== false) {
+                    scoreboard.textContent = player2.name + ' Has won the battle';
+                } 
+                return;
+            }
+        }
+        const deactivateGrid = () => {
+            const grid = document.querySelectorAll('#grid2');
+            grid.forEach(item => {
+                item.removeEventListener('click', listener);
+            });
+        };
         const randomAttackPlayer = () => {
             player1.computerAttack(player2);
             dom.displayGridComputer(player2);
             if (winner() !== false) {
-                const winner = winner();
-                scoreboard.textContent = winner.name + ' Has won the battle';
+                scoreboard.textContent = player1.name + ' Has won the battle';
                 return;
             }
             turn++;
@@ -88,8 +89,7 @@ const game = (() => {
             player2.computerAttack(player1);
             dom.displayGridPlayer(player1);
             if (winner() !== false) {
-                const winner = winner();
-                scoreboard.textContent = winner.name + ' Has won the battle';
+                scoreboard.textContent = player2.name + ' Has won the battle';
             } 
             return;
         }

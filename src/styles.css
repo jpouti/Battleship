@@ -68,6 +68,56 @@ html {
     background-color: grey;
 }
 
+.miss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+}
+
+.carrier {
+    background-image: url('./icons/carrier.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center; 
+}
+
+.battleship {
+    background-image: url('./icons/battleship.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center; 
+}
+
+.cruiser {
+    background-image: url('./icons/cruiser.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.submarine {
+    background-image: url('./icons/submarine.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center; 
+}
+
+.destroyer {
+    background-image: url('./icons/destroyer.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center; 
+}
+
+.hit { /* overrides the ship img after hit */
+    background-image: url('./icons/hit.png');
+    z-index: 1;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
 .game-btn-container {
     display: flex;
     justify-content: center;

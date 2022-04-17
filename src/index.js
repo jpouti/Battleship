@@ -52,3 +52,5 @@ function createEventlistener() {
 }
 
 createEventlistener();
+
+// icons <a href='https://www.freepik.com/vectors/warship'>Warship vector created by macrovector - www.freepik.com</a>
