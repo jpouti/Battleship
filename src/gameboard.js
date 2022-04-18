@@ -11,6 +11,15 @@ const Gameboard = () => {
         submarine: shipFactory(3),
         destroyer: shipFactory(2),
     }
+    const defaultHealth = () => {
+        ships['carrier'].health.fill(1);
+        ships['battleship'].health.fill(1)
+        ships['cruiser'].health.fill(1)
+        ships['submarine'].health.fill(1);
+        ships['destroyer'].health.fill(1);
+    }
+    let shipsHit = [];
+    let lastAttack = [];
     const placeShip = (ship, x, y, rotation) => {
         const length = ships[ship].length;
         if (placementCheck(ship, rotation, x, y) === true) {
@@ -44,6 +53,8 @@ const Gameboard = () => {
     const receiveAttack = (x, y) => {
         if (board[x][y][0] === 1) {
             const ship = board[x][y][1];
+            shipsHit.push(ship);
+            lastAttack.push(true)
             const place = board[x][y][2];
             board[x][y] = 'hit';
             ships[ship].hit(place);
@@ -51,6 +62,7 @@ const Gameboard = () => {
             return board;
         } else if (board[x][y] === "") {
             board[x][y] = 'miss';
+            lastAttack.push(false);
             return board;
         } else if (board[x][y] === 'hit' || board[x][y] === 'miss') {
             console.log('You have already shot here, please try again for a new spot');
@@ -120,7 +132,7 @@ const Gameboard = () => {
         }
         return board;
     }
-    return { ships, board, placeShip, receiveAttack, everythingLost, placementCheck, randomPlacement, clearBoard };
+    return { ships, board, shipsHit, lastAttack, defaultHealth, placeShip, receiveAttack, everythingLost, placementCheck, randomPlacement, clearBoard };
 };
 
 export { Gameboard };
