@@ -57,6 +57,9 @@ const game = (() => {
             } else if (player2.gameboard.board[x][y].length > 1 || player2.gameboard.board[x][y] === '') { // add feature to display hits on the player containers as health left for the ships
                 player1.attack(x, y, player2);
                 dom.displayGridComputer(player2);
+                if (player2.gameboard.lastAttack.at(-1) === true) {
+                    dom.shipCondition(player2);                    
+                }
                 if (winner() !== false) {
                     scoreboard.textContent = player1.name + ' Has won the battle';
                     return;
@@ -65,6 +68,9 @@ const game = (() => {
 
                 player2.computerAttack(player1);
                 dom.displayGridPlayer(player1);
+                if (player1.gameboard.lastAttack.at(-1) === true) {
+                    dom.shipCondition(player1);                    
+                }
                 if (winner() !== false) {
                     scoreboard.textContent = player2.name + ' Has won the battle';
                 } 
@@ -80,6 +86,9 @@ const game = (() => {
         const randomAttackPlayer = () => {
             player1.computerAttack(player2);
             dom.displayGridComputer(player2);
+            if (player2.gameboard.lastAttack.at(-1) === true) {
+                dom.shipCondition(player2);                    
+            }
             if (winner() !== false) {
                 scoreboard.textContent = player1.name + ' Has won the battle';
                 return;
@@ -88,6 +97,9 @@ const game = (() => {
     
             player2.computerAttack(player1);
             dom.displayGridPlayer(player1);
+            if (player1.gameboard.lastAttack.at(-1) === true) {
+                dom.shipCondition(player1);                    
+            }
             if (winner() !== false) {
                 scoreboard.textContent = player2.name + ' Has won the battle';
             } 

@@ -6,9 +6,16 @@ import './styles.css';
 // create page with default player names and settings
 const player1 = Player('Player1');
 const player2 = Player('Computer');
-dom.pageLoad(player1, player2);
-game.randomShip(player1);
-player2.gameboard.randomPlacement();
+
+function loadDefault(player1, player2) {
+    dom.pageLoad(player1, player2);
+    game.randomShip(player1);
+    player2.gameboard.clearBoard();
+    player2.gameboard.randomPlacement();
+    const scoreboard = document.getElementById('scoreboard');
+    scoreboard.textContent = 'Place your ships and start a battle of the year by pressing "Start Game"';   
+    createEventlistener();
+}
 
 //create event listeners for buttons
 function createEventlistener() {
@@ -16,12 +23,14 @@ function createEventlistener() {
     changeNameBtnPlayer1.addEventListener('click', () => {
         let input = prompt('Please give a new name for your player!');
         game.changeName(player1, input);
+        loadDefault(player1, player2);
     });
     
     const changeNameBtnPlayer2 = document.getElementById('name-btn-2');
     changeNameBtnPlayer2.addEventListener('click', () => {
         let input = prompt('Please give a new name for your player!');
         game.changeName(player2, input);
+        loadDefault(player1, player2);
     });
     
     const randomShips = document.getElementById('ship-btn');
@@ -35,6 +44,8 @@ function createEventlistener() {
     
     const resetGame = document.getElementById('reset-btn');
     resetGame.addEventListener('click', () => {
+        player1.gameboard.defaultHealth();
+        player2.gameboard.defaultHealth();
         dom.pageLoad(player1, player2);
         game.randomShip(player1);
         player2.gameboard.clearBoard();
@@ -51,6 +62,6 @@ function createEventlistener() {
     }    
 }
 
-createEventlistener();
+loadDefault(player1, player2);
 
 // icons <a href='https://www.freepik.com/vectors/warship'>Warship vector created by macrovector - www.freepik.com</a>

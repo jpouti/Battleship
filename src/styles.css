@@ -39,16 +39,24 @@ html {
     grid-column-start: 1;
     grid-row-start: 2;
     margin-bottom: 2vh;
+    margin-top: 2vh;
+    display: grid;
+    grid-template-columns: 4vw auto;
+}
+
+.btn-container-computer {
+    text-align: right;
 }
 
 .btn-container-player {
     grid-column-start: 2;
     grid-row-start: 1;
     grid-row-end: 3;
+    margin-right: 5vw;
 }
 
 .btn-container-player > button {
-    margin-top: 1vh;
+    margin-bottom: 1vh;
     margin-left: 1vw;
 }
 
@@ -79,7 +87,7 @@ html {
     background-image: url('./icons/carrier.png');
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: center; 
+    background-position: center;
 }
 
 .battleship {

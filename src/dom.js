@@ -29,29 +29,16 @@ const dom = (() => {
         const shipContainer = document.createElement('div');
         shipContainer.className = 'ship-container';
 
-        const carrier = document.createElement('div');
-        const battleship = document.createElement('div');
-        const cruiser = document.createElement('div');
-        const submarine = document.createElement('div');
-        const destroyer = document.createElement('div');
-
-        carrier.classList.add('carrier');
-        battleship.classList.add('battleship');
-        cruiser.classList.add('cruiser');
-        submarine.classList.add('submarine');
-        destroyer.classList.add('destroyer');
-
-        carrier.textContent = player.gameboard.ships['carrier'].health;
-        battleship.textContent = player.gameboard.ships['battleship'].health;
-        cruiser.textContent = player.gameboard.ships['cruiser'].health;
-        submarine.textContent = player.gameboard.ships['submarine'].health;
-        destroyer.textContent = player.gameboard.ships['destroyer'].health;
-
-        shipContainer.appendChild(carrier);
-        shipContainer.appendChild(battleship);
-        shipContainer.appendChild(cruiser);
-        shipContainer.appendChild(submarine);
-        shipContainer.appendChild(destroyer);
+        const ships = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
+        ships.forEach(ship => {
+            const element = document.createElement('div');
+            element.id = ship + '-' + player.name;
+            element.textContent = player.gameboard.ships[ship].health;
+            const elementImg = document.createElement('div');
+            elementImg.classList.add(ship);
+            shipContainer.appendChild(element);
+            shipContainer.appendChild(elementImg);
+        });
         return shipContainer;
     }
     // create elements for players
@@ -217,7 +204,31 @@ const dom = (() => {
         content.appendChild(gameBtns());
         content.appendChild(createScoreboard());
     }
-    return {createGrid, createShips, players, displayGridPlayer, displayGridComputer, pageLoad}
+    const sunkMessage = (player, ship) => {
+        const scoreboard = document.getElementById('scoreboard');
+        scoreboard.textContent = player.name + ' has lost a ship: ' + ship;
+    }
+    const shipCondition = (player) => {
+        const ship = player.gameboard.shipsHit.at(-1);
+        const element = document.getElementById(ship + '-' + player.name);
+        const health = player.gameboard.ships[ship].health;
+        const sortHealth = [...health].sort();
+        element.textContent = sortHealth;
+        if (player.gameboard.ships[ship].isSunk() === true) {
+            element.style.textDecoration = 'line-through';
+            element.style.color = 'red';
+            sunkMessage(player, ship);
+        }
+    }
+    return {
+        createGrid,
+        createShips,
+        players,
+        displayGridPlayer,
+        displayGridComputer,
+        pageLoad,
+        shipCondition
+        }
 })();
 
 export { dom };
